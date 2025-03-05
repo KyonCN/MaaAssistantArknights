@@ -89,9 +89,8 @@ namespace MaaWpfGui.Helper
             var etag = force ? string.Empty : Get(url);
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
-                {
-                    "Accept", "application/octet-stream"
-                },
+                { "Accept", "application/octet-stream" },
+                { "Connection", "close" },
             };
 
             if (!string.IsNullOrEmpty(etag))
@@ -99,7 +98,7 @@ namespace MaaWpfGui.Helper
                 headers["If-None-Match"] = etag;
             }
 
-            var response = await Instances.HttpService.GetAsync(new Uri(url), headers, httpCompletionOption: HttpCompletionOption.ResponseHeadersRead);
+            var response = await Instances.HttpService.GetAsync(new Uri(url), headers);
             return response;
         }
     }
